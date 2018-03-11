@@ -3,4 +3,4 @@ project(tsinghuaSecondRound)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(tsinghuaSecondRound 27_searchStudentInfo/main.cpp)
+add_executable(tsinghuaSecondRound 26_DecBin/main.cpp)
