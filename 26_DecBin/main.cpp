@@ -6,7 +6,6 @@
 
 #include <iostream>
 #include <queue>
-#include <vector>
 
 using namespace std;
 
@@ -38,32 +37,39 @@ int main () {
                 cur ++;
             }
         }
-        int thisLength = 0;
-        while (!bin.empty()) {
-            int thisValue = bin.front();
+        int thisLength = 1;
+        while (bin.front() == 0) {
             bin.pop();
-            for (int i = 0; i < thisLength; i++) {
-                ans[i] = ans[i] * 2;
-            }
-
-//            int nowValue = bin.top() * level;
-//            int i = 0;
-//            while (nowValue > 0) {
-//                ans[i] += nowValue % 10;
-//                if (ans[i] >= 10) {
-//                    ans[i] -= 10;
-//                    ans[i + 1] += 1;
-//                }
-//                nowValue /= 10;
-//                i++;
-//                if (i > thisLength) {
-//                    thisLength = i;
-//                }
-//            }
-//            level *= 2;
-//            bin.pop();
         }
-        for (int i = 0; i < length; i++) {
+        while (!bin.empty()) {
+            int carry = 0;
+            for (int i = 0; i < thisLength; i++) {
+                ans[i] *= 2;
+                ans[i] += carry;
+                carry = ans[i] / 10;
+                ans[i] = ans[i] % 10;
+            }
+            if (carry > 0) {
+                ans[thisLength++] = carry;
+            }
+            carry = bin.front();
+            int i;
+            for (i = 0; i < thisLength; i++) {
+                ans[i] += carry;
+                if (ans[i] >= 10) {
+                    carry = ans[i] / 10;
+                    ans[i] = ans[i] - 10;
+                } else {
+                    break;
+                }
+            }
+            bin.pop();
+        }
+        int i = length - 1;
+        while (ans[i] == 0) {
+            i--;
+        }
+        for (; i >= 0; i--) {
             cout << ans[i];
         }
         cout << endl;
